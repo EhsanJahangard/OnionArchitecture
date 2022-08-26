@@ -1,9 +1,21 @@
+using Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
 var connectionString = builder.Configuration.GetConnectionString("WarehouseContextConnection") ?? throw new InvalidOperationException("Connection string 'WarehouseContextConnection' not found.");
 
 // Add services to the container.
+
+builder.Services.AddDbContext<ApplicationContext>(options =>
+    options.UseSqlServer(connectionString));
+
+//builder.Services
+//    .AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddRoles<IdentityRole>()
+//    .AddEntityFrameworkStores<ApplicationContext>();
+
 
 
 builder.Services.AddControllers();
