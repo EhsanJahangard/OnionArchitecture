@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers.v1
 {
-    // [ApiVersion("1.0")]
+    [ApiVersion("1.0")]
     public class ProductController : BaseApiController
     {
 
@@ -17,7 +17,7 @@ namespace Presentation.Controllers.v1
         public async Task<IActionResult> List()
         {
             var command = new AddProductDto();
-            command.Title = "ali22";
+            command.Title = "v1";
             command.Description = "aliinpr2oduct";
             command.Barcode = "qr11441122";
 

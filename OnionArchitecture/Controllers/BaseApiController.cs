@@ -6,12 +6,11 @@ using MediatR;
 namespace Presentation.Controllers
 {
     [ApiController]
-    [Route("api/v1/[controller]")]
-   // [Route("api/v{version:apiVersion}/[controller]")]
+    
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class BaseApiController : ControllerBase
     {
         private IMediator _mediator;
-
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 
     }
