@@ -16,26 +16,23 @@ namespace Presentation.Controllers.v1
         [HttpGet]
         public async Task<IActionResult> List()
         {
-            var command = new AddProductDto();
-            command.Title = "v1";
-            command.Description = "aliinpr2oduct";
-            command.Barcode = "qr11441122";
+            
+        
+            
+            return Ok();
 
 
+        }
+        [HttpPost]
+        public async Task<long> Add()
+        {
 
+          
 
-
-            return Ok(await Mediator.Send(command));
+            return 1;
 
 
         }
 
-        //public async Task<long> List()
-        //{
-        //    var x =  _product.List();
-        //    return 1;
-
-
-        //}
     }
 }

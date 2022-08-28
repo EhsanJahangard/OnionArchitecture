@@ -1,7 +1,7 @@
 ﻿using Application.Dto.Product;
 using Application.Interfaces.IContext;
 using Domain.Entities;
-using MediatR;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace Application.Features.ProductFeatures.Commands
 {
-    public class CreateProductCommand : IRequestHandler<Dto.Product.AddProductDto, long>
+    public class CreateProductCommand 
     {
         private readonly IApplicationContext _context;
         public CreateProductCommand(IApplicationContext context)
         {
             _context = context;
         }
-        public async Task<long> Handle(AddProductDto request, CancellationToken cancellationToken)
+        public async Task<long> Create(AddProductDto request, CancellationToken cancellationToken)
         {
             var product = new Product();
             product.QrBarCode = request.Barcode;
