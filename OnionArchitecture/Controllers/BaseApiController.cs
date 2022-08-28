@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Application.Features;
 using Application.Dto;
+using MediatR;
+
 namespace Presentation.Controllers
 {
     [ApiController]
@@ -8,10 +10,9 @@ namespace Presentation.Controllers
    // [Route("api/v{version:apiVersion}/[controller]")]
     public class BaseApiController : ControllerBase
     {
-        public BaseApiController()
-        {
+        private IMediator _mediator;
 
-        }
-       
+        protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+
     }
 }

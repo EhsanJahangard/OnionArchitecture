@@ -1,30 +1,21 @@
-using Infrastructure.Context;
-using Microsoft.EntityFrameworkCore;
+using Application;
+using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-var connectionString = builder.Configuration.GetConnectionString("WarehouseContextConnection") ?? throw new InvalidOperationException("Connection string 'WarehouseContextConnection' not found.");
+
 
 // Add services to the container.
 
-builder.Services.AddDbContext<ApplicationContext>(options =>
-    options.UseSqlServer(connectionString));
-
-//builder.Services
-//    .AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
-//    .AddRoles<IdentityRole>()
-//    .AddEntityFrameworkStores<ApplicationContext>();
-
-
+builder.Services.AddApplication();
+builder.Services.AddPersistence(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-builder.Services.AddTransient<Application.Interfaces.IProduct, Application.Features.ProductFeatures.ProductService>();
 
 var app = builder.Build();
 
