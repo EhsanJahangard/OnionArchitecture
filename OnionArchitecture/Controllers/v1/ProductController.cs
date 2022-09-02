@@ -7,29 +7,31 @@ namespace Presentation.Controllers.v1
     [ApiVersion("1.0")]
     public class ProductController : BaseApiController
     {
-
-        public ProductController()
+        Application.Interfaces.ICreateProductCommand _addProduct;
+        Application.Interfaces.IListProductById _listProduct;
+        public ProductController(Application.Interfaces.ICreateProductCommand addProduct, Application.Interfaces.IListProductById listProduct)
         {
-
+            _addProduct = addProduct;
+            _listProduct = listProduct;
 
         }
         [HttpGet]
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(long ProductId)
         {
-            
-        
-            
-            return Ok("List");
+            var res = await _listProduct.List(ProductId);
+
+
+            return Ok(res);
 
 
         }
         [HttpPost]
-        public  async Task<IActionResult> Add()
+        public async Task<IActionResult> Add()
         {
-            var x = new Application.Features.ProductFeatures.Commands.CreateProductCommand();
+            var res = await _addProduct.Create(new AddProductDto { Barcode = "NewNewNewNeWenwEnwENwENbarcode", Description = "NewNewNewNeWenwEnwENwENbarcode2", Title = "newProductNeeeeeeeeew" });
 
 
-            return Ok("Add");
+            return Ok(res.ToString());
 
 
         }

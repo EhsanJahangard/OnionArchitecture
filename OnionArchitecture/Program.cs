@@ -30,7 +30,9 @@ builder.Services.AddApiVersioning(config =>
     config.ReportApiVersions = true;
 });
 #endregion
+
 // Add services to the container.
+//builder.Services.AddTransient<Application.Interfaces.IContext.IApplicationContext>(provider => provider.GetService<Infrastructure.Context.ApplicationContext>());
 
 builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration);

@@ -20,8 +20,8 @@ namespace Infrastructure
                     b => b.MigrationsAssembly(typeof(ApplicationContext).Assembly.FullName)));
 
 
-            //services.AddScoped<IApplicationContext>(provider => provider.GetService<ApplicationContext>());
-            //services.AddScoped<IApplicationContext,ApplicationContext>();
+            services.AddScoped<IApplicationContext>(provider => provider.GetService<ApplicationContext>());
+            
         }
     }
 }

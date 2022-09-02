@@ -1,25 +1,37 @@
 ﻿using Application.Dto.Product;
-using Application.Interfaces.IContext;
+using Infrastructure.Context;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Application.Interfaces;
 
 namespace Application.Features.ProductFeatures.Queries
 {
-    public class ListProductById 
+    public class ListProductById : IListProductById
     {
-        private readonly IApplicationContext _context;
+        private IApplicationContext _context;
         public ListProductById(IApplicationContext context)
         {
             _context = context;
         }
-        public async Task<List<Dto.Product.ListProductDto>> List(long resuly, CancellationToken cancellationToken)
+        public async Task<List<Dto.Product.ListProductDto>> List(long id)
         {
-            var x = new List<Dto.Product.ListProductDto> { new Dto.Product.ListProductDto {  Id=1, Barcode="ASd", CreateDate=DateTime.Now,EditeDate=DateTime.Now, Description="asd", Title="asd" } };
-            return x;
+            var result = _context.Products.Select(x => new ListProductDto
+            {
+                Barcode = x.QrBarCode,
+                CreateDate = x.CreateDate,
+                Description = x.Description,
+                Id = x.Id,
+                Title = x.Title,
+                EditeDate = x.EditeDate
+
+            }).ToList();
+            return result;
         }
     }
+
+    
 }
