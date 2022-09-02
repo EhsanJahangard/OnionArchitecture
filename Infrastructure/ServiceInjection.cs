@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.IContext;
+﻿
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,7 +21,7 @@ namespace Infrastructure
 
 
             //services.AddScoped<IApplicationContext>(provider => provider.GetService<ApplicationContext>());
-            services.AddScoped<IApplicationContext,ApplicationContext>();
+            //services.AddScoped<IApplicationContext,ApplicationContext>();
         }
     }
 }

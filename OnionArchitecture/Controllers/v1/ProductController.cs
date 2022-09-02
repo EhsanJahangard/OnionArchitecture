@@ -19,17 +19,17 @@ namespace Presentation.Controllers.v1
             
         
             
-            return Ok();
+            return Ok("List");
 
 
         }
         [HttpPost]
-        public async Task<long> Add()
+        public  async Task<IActionResult> Add()
         {
 
-          
 
-            return 1;
+
+            return Ok("Add");
 
 
         }
