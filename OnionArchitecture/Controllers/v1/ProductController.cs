@@ -26,7 +26,7 @@ namespace Presentation.Controllers.v1
         [HttpPost]
         public  async Task<IActionResult> Add()
         {
-
+            var x = new Application.Features.ProductFeatures.Commands.CreateProductCommand();
 
 
             return Ok("Add");

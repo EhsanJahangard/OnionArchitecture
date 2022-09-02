@@ -1,4 +1,5 @@
 ﻿
+using Application.Interfaces.IContext;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace Application
     {
         public static void AddApplication(this IServiceCollection services)
         {
-           
+            //services.AddScoped<IApplicationContext, Infrastructure.Context.ApplicationContext>();
         }
     }
 }
