@@ -1,13 +1,9 @@
 ﻿
 using Infrastructure.Context;
+using Infrastructure.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure
 {
@@ -15,12 +11,14 @@ namespace Infrastructure
     {
         public static void AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ApplicationContext>(options =>
+            services.AddDbContext<Context.AppContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("WarehouseContextConnection"),
-                    b => b.MigrationsAssembly(typeof(ApplicationContext).Assembly.FullName)));
+                    b => b.MigrationsAssembly(typeof(Context.AppContext).Assembly.FullName)));
 
 
-            services.AddScoped<IApplicationContext>(provider => provider.GetService<ApplicationContext>());
+            services.AddScoped((Func<IServiceProvider, IAppContext>)(provider => provider.GetService<Context.AppContext>()));
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             
         }
     }

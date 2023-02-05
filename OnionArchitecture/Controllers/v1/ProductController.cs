@@ -1,40 +1,41 @@
 ﻿using Application.Dto.Product;
 using Application.Features.ProductFeatures.Commands;
 using Microsoft.AspNetCore.Mvc;
+using MediatR;
+using Application.Features.ProductFeatures.Queries;
 
 namespace Presentation.Controllers.v1
 {
     [ApiVersion("1.0")]
     public class ProductController : BaseApiController
     {
-        Application.Interfaces.ICreateProductCommand _addProduct;
-        Application.Interfaces.IListProductById _listProduct;
-        public ProductController(Application.Interfaces.ICreateProductCommand addProduct, Application.Interfaces.IListProductById listProduct)
+        private readonly IMediator _mediator;
+        public ProductController(IMediator mediator)
         {
-            _addProduct = addProduct;
-            _listProduct = listProduct;
+            _mediator = mediator;
 
         }
-        [HttpGet]
-        public async Task<IActionResult> List(long ProductId)
+        [HttpPost]
+        public async Task<IActionResult> Add(CreateProductCommand command)
         {
-            var res = await _listProduct.List(ProductId);
+            var res = await _mediator.Send(command);
 
 
             return Ok(res);
 
 
         }
-        [HttpPost]
-        public async Task<IActionResult> Add()
+        [HttpGet]
+        public async Task<IActionResult> Get([FromQuery] ListProductQuery query)
         {
-            var res = await _addProduct.Create(new AddProductDto { Barcode = "NewNewNewNeWenwEnwENwENbarcode", Description = "NewNewNewNeWenwEnwENwENbarcode2", Title = "newProductNeeeeeeeeew" });
+            var res = await _mediator.Send(query);
 
 
-            return Ok(res.ToString());
+            return Ok(res);
 
 
         }
+
 
     }
 }

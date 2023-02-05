@@ -1,13 +1,13 @@
 ﻿
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-
+using Infrastructure.Interfaces;
 namespace Infrastructure.Context;
 
-public class ApplicationContext : DbContext , IApplicationContext
+public class AppContext : DbContext, IAppContext
 {
 
-    public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
+    public AppContext(DbContextOptions<AppContext> options) : base(options)
     {
     }
     public async Task<int> SaveChangesAsync()
@@ -23,10 +23,6 @@ public class ApplicationContext : DbContext , IApplicationContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-
-
-
-        
     }
 }
 

@@ -8,30 +8,51 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Interfaces;
+using MediatR;
+using Infrastructure.Interfaces;
 
-namespace Application.Features.ProductFeatures.Commands
+namespace Application.Features.ProductFeatures.Commands;
+
+public class CreateProductCommand : IRequest<CreateProductCommandResponse>
 {
-    public class CreateProductCommand : ICreateProductCommand
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public string Barcode { get; set; }
+    public int ProductUnitId { get; set; }
+    public int ProductCategoryId { get; set; }
+}
+public class CreateProductCommandResponse
+{
+    public long Id { get; set; }
+}
+
+public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, CreateProductCommandResponse>
+{
+    private readonly IAppContext _applicationContext;
+    public CreateProductCommandHandler(IAppContext applicationContext)
     {
-        private IApplicationContext _context;
-        public CreateProductCommand(IApplicationContext context)
+        _applicationContext = applicationContext;
+    }
+    public async Task<CreateProductCommandResponse> Handle(CreateProductCommand request, CancellationToken cancellationToken)
+    {
+        var p = new Product
         {
-            _context = context;
-        }
-        public async Task<long> Create(AddProductDto request)
-        {
-            var product = new Product();
-            product.QrBarCode = request.Barcode;
-            product.Title = request.Title;
-            product.DateCreateProduct = DateTime.Now;
-            product.CreateDate = DateTime.Now;
-            product.EditeDate = DateTime.Now;
-            product.Description = request.Description;
-            product.ProductCategoryId = 1;
-            product.ProductUnitId = 2;
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
-            return product.Id;
-        }
+
+            Title = request.Title,
+            CreateDate = DateTime.Now,
+            Description = request.Description,
+            EditeDate = DateTime.Now,
+            DateCreateProduct = DateTime.Now,
+            ProductCategoryId = request.ProductCategoryId,
+            ProductUnitId = request.ProductUnitId,
+            QrBarCode = request.Barcode
+
+        };
+        await _applicationContext.Products.AddAsync(p);
+        await _applicationContext.SaveChangesAsync();
+
+
+        return new CreateProductCommandResponse { Id = p.Id };
     }
 }
+
